@@ -56,6 +56,62 @@ window.addEventListener(
 );
 
 /* ----------------------------------------------------------
+    MOBILE MENU
+---------------------------------------------------------- */
+const burger = document.getElementById("burger");
+const mobileMenu = document.getElementById("mobileMenu");
+const mobileOverlay = document.getElementById("mobileOverlay");
+const mobileMenuClose = document.getElementById("mobileMenuClose");
+const mobileMenuLinks = document.querySelectorAll(".mobile-menu__nav a");
+
+function openMobileMenu() {
+  burger.classList.add("is-active");
+  mobileMenu.classList.add("is-open");
+  mobileOverlay.classList.add("is-open");
+  document.body.classList.add("menu-open");
+  burger.setAttribute("aria-expanded", "true");
+  mobileMenu.setAttribute("aria-hidden", "false");
+}
+
+function closeMobileMenu() {
+  burger.classList.remove("is-active");
+  mobileMenu.classList.remove("is-open");
+  mobileOverlay.classList.remove("is-open");
+  document.body.classList.remove("menu-open");
+  burger.setAttribute("aria-expanded", "false");
+  mobileMenu.setAttribute("aria-hidden", "true");
+}
+
+if (burger && mobileMenu && mobileOverlay && mobileMenuClose) {
+  burger.addEventListener("click", () => {
+    if (mobileMenu.classList.contains("is-open")) {
+      closeMobileMenu();
+    } else {
+      openMobileMenu();
+    }
+  });
+
+  mobileMenuClose.addEventListener("click", closeMobileMenu);
+  mobileOverlay.addEventListener("click", closeMobileMenu);
+
+  mobileMenuLinks.forEach((link) => {
+    link.addEventListener("click", closeMobileMenu);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeMobileMenu();
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 1024) {
+      closeMobileMenu();
+    }
+  });
+}
+
+/* ----------------------------------------------------------
     SCROLL-TRIGGERED REVEAL ANIMATIONS
 ---------------------------------------------------------- */
 const revealSelectors = ".reveal, .reveal-left, .reveal-right, .reveal-scale";
